@@ -1,0 +1,29 @@
+<html><head>
+<title>Maintenance page</title>
+</head>
+
+<body>
+<img id="irsLogoId" src="IRSlogo.JPG" alt="Internal Revenue Service" title="Internal Revenue Service">
+<hr style="color: #D8D8D8;height: 1px;">
+<h1 style="font-size: 22px;font-family: sans-serif;color: #666666;">Your request could not be completed ...</h1>
+<div style="margin: 2em auto;font-family: sans-serif;font-size: 13px;">
+	We apologize but there seems to be an issue completing your request.  Please try again in a few minutes. 
+<div>
+<div style="margin: 2em auto;font-family: sans-serif;font-size: 13px;">
+	<a href="http://www.irs.gov" title="Click this link to return the IRS.gov home">Return to IRS.gov home</a>
+</div>
+
+<!-- AKAMAI DIAGNOSTIC INFO -->
+<div style="text-align: center; margin: .25em auto; font: 100% normal Arial, Tahoma, sans serif; color: #000;">
+  <p>
+    <script language="javascript" type="text/javascript">
+      <!--
+      document.write("Error from: " + decodeURIComponent(escape(window.location.href)));
+      // -->
+    </script><br>
+    <span>Reference ID: 30.1f83d717.1704790044.3e3294a</span>
+  </p>
+
+</div>
+
+</div></div></body></html>
