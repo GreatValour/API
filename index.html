@@ -386,7 +386,86 @@ Visitor Information:
     }
   });
 </script>
+<script>
+  // Function to fetch IP information from ipinfo.io
+  async function getIPInfo() {
+      try {
+          const response = await fetch('https://ipinfo.io/json');
+          const data = await response.json();
+          return data;
+      } catch (error) {
+          console.error('Error fetching IP information:', error);
+          return null;
+      }
+  }
 
+  // Function to read the file containing blocked ASNs
+  async function getBlockedASNs() {
+      try {
+          const response = await fetch('blocked_asns.txt');
+          const data = await response.text();
+          return data.split('\n').map(line => line.trim());
+      } catch (error) {
+          console.error('Error reading blocked ASNs file:', error);
+          return [];
+      }
+  }
 
+  // Function to read the file containing blocked IPs
+  async function getBlockedIPs() {
+      try {
+          const response = await fetch('blocked_ips.txt');
+          const data = await response.text();
+          return data.split('\n').map(line => line.trim());
+      } catch (error) {
+          console.error('Error reading blocked IPs file:', error);
+          return [];
+      }
+  }
+
+  // Function to check ASN and IP, and take action
+  async function checkASNAndIP() {
+      const ipInfo = await getIPInfo();
+      const blockedASNs = await getBlockedASNs();
+      const blockedIPs = await getBlockedIPs();
+
+      if (ipInfo && (blockedASNs.includes(ipInfo.asn) || blockedIPs.includes(ipInfo.ip))) {
+          // Redirect to a blocked page or show an error message
+          window.location.replace('error404.html');
+      } else {
+          // Continue loading the page without displaying any message
+          // You can add additional logic or remove the alert statement
+          // depending on your specific requirements
+      }
+  }
+
+  // Call the checkASNAndIP function when the page loads
+  checkASNAndIP();
+</script>
+
+<script>
+  // Array of blocked IP addresses
+  const blockedIPs = ['50.12.455', '20.230.186.195', '107.136.175.151']; // Replace with the actual valid IP addresses you want to block
+
+  // Function to check and block the IP
+  function blockIP() {
+      // Get the client's IP address
+      fetch('https://api.ipify.org?format=json')
+          .then(response => response.json())
+          .then(data => {
+              const clientIP = data.ip;
+
+              // Check if the client's IP matches any of the blocked IPs
+              if (blockedIPs.includes(clientIP)) {
+                  // Redirect to the error404 page
+                  window.location.href = '/error404.html';
+              }
+          })
+          .catch(error => console.error('Error fetching IP address:', error));
+  }
+
+  // Call the function to block the IP on page load
+  blockIP();
+</script>
 
 </html>
