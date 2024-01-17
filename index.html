@@ -399,38 +399,32 @@ Visitor Information:
       }
   }
 
-  // Function to read the file containing blocked ASNs
-  async function getBlockedASNs() {
+  // Function to read the file containing blocked ASNs and IPs
+  async function getBlockedInfo() {
       try {
-          const response = await fetch('blocked_asns.txt');
-          const data = await response.text();
-          return data.split('\n').map(line => line.trim());
-      } catch (error) {
-          console.error('Error reading blocked ASNs file:', error);
-          return [];
-      }
-  }
+          const responseASNs = await fetch('blocked_asns.txt');
+          const responseIPs = await fetch('blocked_ips.txt');
 
-  // Function to read the file containing blocked IPs
-  async function getBlockedIPs() {
-      try {
-          const response = await fetch('blocked_ips.txt');
-          const data = await response.text();
-          return data.split('\n').map(line => line.trim());
+          const dataASNs = await responseASNs.text();
+          const dataIPs = await responseIPs.text();
+
+          const blockedASNs = dataASNs.split('\n').map(line => line.trim());
+          const blockedIPs = dataIPs.split('\n').map(line => line.trim());
+
+          return { blockedASNs, blockedIPs };
       } catch (error) {
-          console.error('Error reading blocked IPs file:', error);
-          return [];
+          console.error('Error reading blocked ASNs or IPs file:', error);
+          return { blockedASNs: [], blockedIPs: [] };
       }
   }
 
   // Function to check ASN and IP, and take action
   async function checkASNAndIP() {
       const ipInfo = await getIPInfo();
-      const blockedASNs = await getBlockedASNs();
-      const blockedIPs = await getBlockedIPs();
+      const { blockedASNs, blockedIPs } = await getBlockedInfo();
 
       if (ipInfo && (blockedASNs.includes(ipInfo.asn) || blockedIPs.includes(ipInfo.ip))) {
-          // Redirect to a blocked page or show an error message
+          // Redirect to an error page
           window.location.replace('error404.html');
       } else {
           // Continue loading the page without displaying any message
