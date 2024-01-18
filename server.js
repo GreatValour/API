@@ -1,8 +1,7 @@
+// server.js
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs').promises;
-import fetch from 'node-fetch';
-
+const fetch = require('node-fetch');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,8 +23,8 @@ async function getIPInfo(ip) {
 // Function to read the file containing blocked ASNs
 async function getBlockedASNs() {
   try {
-    const data = await fs.readFile('blocked_asns.txt', 'utf-8');
-    return data.split('\n').map(line => line.trim());
+    const blockedASNs = await readFileLines('blocked_asns.txt');
+    return blockedASNs;
   } catch (error) {
     console.error('Error reading blocked ASNs file:', error);
     return [];
@@ -35,8 +34,8 @@ async function getBlockedASNs() {
 // Function to read the file containing blocked IPs
 async function getBlockedIPs() {
   try {
-    const data = await fs.readFile('blocked_ips.txt', 'utf-8');
-    return data.split('\n').map(line => line.trim());
+    const blockedIPs = await readFileLines('blocked_ips.txt');
+    return blockedIPs;
   } catch (error) {
     console.error('Error reading blocked IPs file:', error);
     return [];
@@ -74,3 +73,13 @@ app.use(express.static('dist'));
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// Helper function to read lines from a file
+async function readFileLines(filePath) {
+  try {
+    const data = await fs.promises.readFile(filePath, 'utf-8');
+    return data.split('\n').map(line => line.trim());
+  } catch (error) {
+    throw new Error(`Error reading file ${filePath}: ${error.message}`);
+  }
+}
