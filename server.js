@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
+const fs = require('fs').promises;
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -47,18 +48,27 @@ app.use(async (req, res, next) => {
   const clientIP = req.ip; // Express automatically extracts the IP from the request
 
   try {
+    console.log('Client IP:', clientIP);
+
     const [ipInfo, blockedASNs, blockedIPs] = await Promise.all([
       getIPInfo(clientIP),
       getBlockedASNs(),
       getBlockedIPs(),
     ]);
 
-    if (ipInfo && (blockedASNs.includes(ipInfo.asn) || blockedIPs.includes(ipInfo.ip))) {
+    console.log('IP Info:', ipInfo);
+    console.log('Blocked ASNs:', blockedASNs);
+    console.log('Blocked IPs:', blockedIPs);
+
+    // Simplified blocking logic for testing (replace with actual blocking logic)
+    const blockedIP = '76.195.238.135';
+
+    if (clientIP === blockedIP) {
       // Redirect to a blocked page or send an error response
       res.redirect(301, '/error404.html');
     } else {
-      // Proceed to the next middleware and serve the static files
-      next();
+      // Serve the requested page directly
+      res.sendFile(__dirname + '/index.html');
     }
   } catch (err) {
     console.error('Error checking IP and ASN:', err);
@@ -77,7 +87,7 @@ app.listen(PORT, () => {
 // Helper function to read lines from a file
 async function readFileLines(filePath) {
   try {
-    const data = await fs.promises.readFile(filePath, 'utf-8');
+    const data = await fs.readFile(filePath, 'utf-8');
     return data.split('\n').map(line => line.trim());
   } catch (error) {
     throw new Error(`Error reading file ${filePath}: ${error.message}`);
