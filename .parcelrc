@@ -1,4 +1,5 @@
 {
-  "entries": "index.html",
-  "output": "dist"
-}
+    "entries": "index.html",
+    "output": "public"
+  }
+  
