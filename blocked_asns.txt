@@ -1,8 +1,8 @@
-AS11814 DISTRIBUTEL COMMUNICATIONS LTD.
-AS12252 America Movil Peru S.A.C.
-AS12322 Free SAS
-AS12400 Partner Communications Ltd.
-AS1241 Forthnet
+AS11814 
+AS12252 
+AS12322 
+AS12400 
+AS1241 
 AS12552 IP-Only Networks AB
 AS12586 GHOSTnet GmbH
 AS1267 WIND TRE S.P.A.
@@ -221,3 +221,4 @@ AS9824 Jupiter Telecommunication Co. Ltd
 AS9829 National Internet Backbone
 AS9930 TTNET-MY
 AS33491 Comcast Cable Communications, LLC
+AS7018
