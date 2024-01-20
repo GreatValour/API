@@ -222,4 +222,3 @@ AS9829 National Internet Backbone
 AS9930 TTNET-MY
 AS33491 Comcast Cable Communications, LLC
 AS7018
-AS329057
